@@ -1,0 +1,9 @@
+header h3 {
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 15px 0;
+  margin: 0;
+  text-align: center;
+  background-color: yellow;
+  box-shadow: 0 5px 20px gray;
+}

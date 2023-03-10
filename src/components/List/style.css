@@ -1,0 +1,76 @@
+.main {
+  width: 80%;
+  margin: 40px auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 40px;
+  border-radius: 10px;
+}
+
+.add {
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.add button {
+  width: 15%;
+  height: 35px;
+
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.add button:hover {
+  background-color: rgb(252, 252, 59);
+}
+
+.add input {
+  width: 70%;
+  padding: 0;
+  font-size: 1.1rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+}
+
+.edit-delete {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+}
+
+.editing {
+  width: fit-content;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 10px;
+}
+
+.editing input {
+  font-size: 1.2rem;
+}
+
+.editing button {
+  width: 60px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.editing button:hover {
+  background-color: rgb(252, 252, 59);
+}
