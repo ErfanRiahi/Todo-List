@@ -53,24 +53,40 @@
 
 .editing {
   width: fit-content;
-  display: grid;
-  grid-template-columns: auto auto auto;
-  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .editing input {
   font-size: 1.2rem;
+  width: 200px;
 }
 
 .editing button {
-  width: 60px;
+  background-color: white;
+  width: fit-content;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  transition: background-color 0.2s;
+  scale: 1;
 }
 
 .editing button:hover {
-  background-color: rgb(252, 252, 59);
+  scale: 1.2;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+}
+
+@media (width < 450px) {
+  .buttons {
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px auto;
+  }
 }

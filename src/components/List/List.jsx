@@ -49,7 +49,7 @@ export const List = () => {
   return (
     <main className="main">
       <form className="add" onSubmit={(e) => e.preventDefault()}>
-        <input type="text" placeholder="Enter your task..." ref={refAdd} />
+        <input type="text" placeholder=" Enter your task..." ref={refAdd} />
         <button onClick={addTask} onKeyDown={addTask}>
           Add
         </button>
@@ -65,20 +65,22 @@ export const List = () => {
                       {index + 1}.
                       <input defaultValue={todo.title} ref={refUpdate} />
                     </span>
-                    <button onClick={() => setUpdatedTodo("")}>
-                      <FontAwesomeIcon
-                        icon={faXmarkCircle}
-                        fontSize="1.2rem"
-                        color="red"
-                      />
-                    </button>
-                    <button onClick={() => updateTask(todo._id)}>
-                      <FontAwesomeIcon
-                        icon={faCheckCircle}
-                        fontSize="1.2rem"
-                        color="green"
-                      />
-                    </button>
+                    <div className="buttons">
+                      <button onClick={() => setUpdatedTodo("")}>
+                        <FontAwesomeIcon
+                          icon={faXmarkCircle}
+                          fontSize="1.2rem"
+                          color="red"
+                        />
+                      </button>
+                      <button onClick={() => updateTask(todo._id)}>
+                        <FontAwesomeIcon
+                          icon={faCheckCircle}
+                          fontSize="1.2rem"
+                          color="green"
+                        />
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <span>{`${index + 1}. ${todo.title}`}</span>
