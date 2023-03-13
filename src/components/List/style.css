@@ -51,6 +51,14 @@
   gap: 10px;
 }
 
+.edit-delete * {
+  scale: 1;
+}
+
+.edit-delete *:hover {
+  scale: 1.2; 
+}
+
 .editing {
   width: fit-content;
   display: flex;
