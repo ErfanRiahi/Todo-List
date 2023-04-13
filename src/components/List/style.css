@@ -90,3 +90,9 @@
     margin: 5px auto;
   }
 }
+
+@media (width < 585) {
+  .search-add {
+    grid-template-columns: auto !important;
+  }
+}

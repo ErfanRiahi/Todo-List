@@ -1,3 +1,3 @@
 # APS-TodoList
 
-use `yarn i` to install all necessary package
+use `yarn` to install all necessary package and `yarn dev` to run the project
