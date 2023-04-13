@@ -17,10 +17,12 @@ const getAllTodos = async (req, res) => {
 // @route - POST '/todos'
 // @access - public
 const createTodo = async (req, res) => {
-  const { title } = req?.body;
-  if (!title) return res.status(400).json({ message: `title is required.` });
+  // const { title } = req?.body;
+  const todo = new Todo(req?.body);
+  if (!todo.title)
+    return res.status(400).json({ message: `title is required.` });
   try {
-    await Todo.create({ title: req.body.title });
+    await Todo.create(todo);
     const allTodo = await Todo.find();
     res.json(allTodo);
   } catch (err) {
@@ -32,20 +34,17 @@ const createTodo = async (req, res) => {
 // @route - PUT '/todos'
 // @access - public
 const updateTodo = async (req, res) => {
-  const { title, id } = req?.body;
+  const { id, task } = req?.body;
   if (!id) return res.status(400).json({ message: "ID parameter is required" });
 
   try {
-    const todo = await Todo.findOne({ _id: id });
+    const todo = await Todo.findByIdAndUpdate(id, task);
     if (!todo)
       return res
         .status(204)
         .json({ message: `no todo matches with ID: ${id}` });
 
-    if (req.body?.title) todo.title = title;
-
-    await todo.save();
-    const allTodo = await Todo.find();
+    const allTodo = await Todo.find().sort({ completed: 1 });
     res.json(allTodo);
   } catch (err) {
     console.log(err);
