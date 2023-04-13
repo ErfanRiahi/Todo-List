@@ -1,28 +1,16 @@
 import "./style.css";
-import { useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrashCan,
-  faPenToSquare,
-  faCheckCircle,
-  faXmarkCircle,
-} from "@fortawesome/free-regular-svg-icons";
-import {
-  addTodo,
-  deleteTodo,
-  getAllTodos,
-  updateTodo,
-} from "../../api/todoAPI";
+import { useEffect, useState } from "react";
+import { addTodo, getAllTodos, updateTodo } from "../../api/todoAPI";
 import Button from "@mui/material/Button";
 import {
   Alert,
   Box,
   CircularProgress,
-  LinearProgress,
   Paper,
   Snackbar,
   Table,
   TableBody,
+  TableCell,
   TableContainer,
   TableRow,
   TextField,
@@ -43,8 +31,6 @@ export const List = () => {
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const handleCloseShowAlert = () => setShowAlert(false);
-  const refAdd = useRef();
-  const refUpdate = useRef();
 
   useEffect(() => {
     getAllTodos().then((data) => setAllTasks(data));
@@ -73,15 +59,6 @@ export const List = () => {
       setAllTasks(res);
     }
   };
-
-  const updateTask = async (id) => {
-    setTodos(await updateTodo({ id, title: refUpdate.current.value }));
-    setUpdatedTodo("");
-  };
-
-  function handleAddTask() {
-    addTask();
-  }
 
   return (
     <main className="main">
@@ -119,7 +96,7 @@ export const List = () => {
             color: "black",
             "&:hover": { backgroundColor: yellow[500] },
           }}
-          onClick={handleAddTask}
+          onClick={addTask}
         >
           {taskAdded ? (
             <CircularProgress
@@ -134,9 +111,17 @@ export const List = () => {
       <TableContainer component={Paper}>
         <Table>
           <TableBody>
-            {allTasks?.map((singleTask, index) => (
-              <Task key={index} props={{ singleTask, index, setAllTasks }} />
-            ))}
+            {allTasks ? (
+              allTasks?.map((singleTask, index) => (
+                <Task key={index} props={{ singleTask, index, setAllTasks }} />
+              ))
+            ) : (
+              <TableRow>
+                <TableCell>
+                  <CircularProgress />
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

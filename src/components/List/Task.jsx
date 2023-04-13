@@ -131,84 +131,82 @@ export const Task = ({ props }) => {
           </TableCell>
         </>
       ) : (
-        <>
-          <TableCell align="left">
-            {taskEditing ? (
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <TextField
-                  label="Editing task..."
-                  value={textFiledValue}
-                  onChange={(e) => {
-                    setTextFieldValue(e.target.value);
-                  }}
-                />
-                {taskStatusEditing ? (
-                  <CircularProgress sx={{ marginLeft: "10px" }} />
-                ) : (
-                  <Box>
-                    <IconButton
-                      onClick={() => {
-                        setTaskEditing(false);
-                        setTextFieldValue(singleTask.title);
-                      }}
-                    >
-                      <Cancel color="error" />
-                    </IconButton>
-                    <IconButton
-                      onClick={() =>
-                        updateTask(singleTask._id, {
-                          title: textFiledValue,
-                          completed: singleTask.completed,
-                        })
-                      }
-                    >
-                      <CheckCircle color="success" />
-                    </IconButton>
-                  </Box>
-                )}
-              </Box>
-            ) : (
-              <Typography
-                variant="h6"
-                sx={
-                  singleTask.completed
-                    ? { opacity: "0.5", textDecoration: "line-through" }
-                    : {}
-                }
-              >
-                {singleTask?.title}
-              </Typography>
-            )}
-
-            <Box textAlign="right">
-              {taskStatus ? (
-                <CircularProgress />
+        <TableCell align="left">
+          {taskEditing ? (
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <TextField
+                label="Editing task..."
+                value={textFiledValue}
+                onChange={(e) => {
+                  setTextFieldValue(e.target.value);
+                }}
+              />
+              {taskStatusEditing ? (
+                <CircularProgress sx={{ marginLeft: "10px" }} />
               ) : (
                 <Box>
-                  <Checkbox
-                    onChange={(e) =>
+                  <IconButton
+                    onClick={() => {
+                      setTaskEditing(false);
+                      setTextFieldValue(singleTask.title);
+                    }}
+                  >
+                    <Cancel color="error" />
+                  </IconButton>
+                  <IconButton
+                    onClick={() =>
                       updateTask(singleTask._id, {
-                        title: singleTask.title,
-                        completed: e.target.checked,
+                        title: textFiledValue,
+                        completed: singleTask.completed,
                       })
                     }
-                    checked={singleTask.completed}
-                  />
-                  {singleTask.completed ? (
-                    ""
-                  ) : (
-                    <IconButton onClick={() => setTaskEditing(true)}>
-                      <Edit sx={{ color: "blue" }} />
-                    </IconButton>
-                  )}
-                  <IconButton onClick={deleteTask}>
-                    <Delete sx={{ color: "red" }} />
+                  >
+                    <CheckCircle color="success" />
                   </IconButton>
                 </Box>
               )}
             </Box>
-          </TableCell>
-        </>
+          ) : (
+            <Typography
+              variant="h6"
+              sx={
+                singleTask.completed
+                  ? { opacity: "0.5", textDecoration: "line-through" }
+                  : {}
+              }
+            >
+              {singleTask?.title}
+            </Typography>
+          )}
+
+          <Box textAlign="right">
+            {taskStatus ? (
+              <CircularProgress />
+            ) : (
+              <Box>
+                <Checkbox
+                  onChange={(e) =>
+                    updateTask(singleTask._id, {
+                      title: singleTask.title,
+                      completed: e.target.checked,
+                    })
+                  }
+                  checked={singleTask.completed}
+                />
+                {singleTask.completed ? (
+                  ""
+                ) : (
+                  <IconButton onClick={() => setTaskEditing(true)}>
+                    <Edit sx={{ color: "blue" }} />
+                  </IconButton>
+                )}
+                <IconButton onClick={deleteTask}>
+                  <Delete sx={{ color: "red" }} />
+                </IconButton>
+              </Box>
+            )}
+          </Box>
+        </TableCell>
       )}
     </TableRow>
   );
