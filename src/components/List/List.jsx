@@ -25,6 +25,7 @@ export const List = () => {
   const [task, setTask] = useState({
     title: "",
     completed: false,
+    important: false,
   });
 
   const [taskAdded, setTaskAdded] = useState(false); //  for circular progress
@@ -55,6 +56,7 @@ export const List = () => {
       setTask({
         title: "",
         completed: false,
+        important: false,
       });
       setAllTasks(res);
     }
