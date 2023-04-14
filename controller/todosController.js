@@ -5,7 +5,7 @@ const Todo = require("../model/Todo");
 // @access - public
 const getAllTodos = async (req, res) => {
   try {
-    const todos = await Todo.find();
+    const todos = await Todo.find().sort({ important: -1, completed: 1 });
     if (!todos) return res.status(204).json({ message: "No todo found" });
     res.json(todos);
   } catch (err) {
@@ -23,7 +23,7 @@ const createTodo = async (req, res) => {
     return res.status(400).json({ message: `title is required.` });
   try {
     await Todo.create(todo);
-    const allTodo = await Todo.find();
+    const allTodo = await Todo.find().sort({ important: -1, completed: 1 });
     res.json(allTodo);
   } catch (err) {
     console.log(err);
@@ -44,7 +44,7 @@ const updateTodo = async (req, res) => {
         .status(204)
         .json({ message: `no todo matches with ID: ${id}` });
 
-    const allTodo = await Todo.find().sort({ completed: 1 });
+    const allTodo = await Todo.find().sort({ important: -1, completed: 1 });
     res.json(allTodo);
   } catch (err) {
     console.log(err);
@@ -64,7 +64,7 @@ const deleteTodo = async (req, res) => {
         .status(204)
         .json({ message: `no matches todo with ID: ${req.body.id}.` });
     await todo.deleteOne();
-    const allTodo = await Todo.find();
+    const allTodo = await Todo.find().sort({ important: -1, completed: 1 });
     res.json(allTodo);
   } catch (err) {
     console.log(err);
