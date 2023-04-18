@@ -6,6 +6,11 @@ import {
   Alert,
   Box,
   CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  LinearProgress,
   Paper,
   Snackbar,
   Table,
@@ -22,6 +27,7 @@ import { Task } from "./Task";
 
 export const List = () => {
   const [allTasks, setAllTasks] = useState();
+  const [searchedTask, setSearchedTask] = useState();
   const [task, setTask] = useState({
     title: "",
     completed: false,
@@ -29,12 +35,22 @@ export const List = () => {
   });
 
   const [taskAdded, setTaskAdded] = useState(false); //  for circular progress
+
   const [alertMessage, setAlertMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
   const handleCloseShowAlert = () => setShowAlert(false);
 
+  const [openAddTaskDialog, setOpenAddTaskDialog] = useState(false);
+  const handleCloseAddTaskDialog = () => {
+    setOpenAddTaskDialog(false);
+    setTask({ ...task, title: "" });
+  };
+
   useEffect(() => {
-    getAllTodos().then((data) => setAllTasks(data));
+    getAllTodos().then((data) => {
+      setAllTasks(data);
+      setSearchedTask(data);
+    });
   }, []);
 
   const addTask = async () => {
@@ -59,15 +75,16 @@ export const List = () => {
         important: false,
       });
       setAllTasks(res);
+      setSearchedTask(res);
+      handleCloseAddTaskDialog();
     }
   };
 
   return (
     <main className="main">
-      {useMediaQuery("(min-width: 585px)")}
       <Box
         sx={
-          useMediaQuery("(min-width: 585px)")
+          useMediaQuery("(min-width: 740px)")
             ? {
                 display: "grid",
                 gridTemplateColumns: "70% 20% ",
@@ -82,11 +99,13 @@ export const List = () => {
         }
       >
         <TextField
-          variant="outlined"
-          label="Write a task..."
+          label="Search..."
           autoComplete="off"
-          value={task.title}
-          onChange={(e) => setTask({ ...task, title: e.target.value })}
+          onChange={(e) =>
+            setSearchedTask(
+              allTasks.filter((task) => task.title.includes(e.target.value))
+            )
+          }
         />
         <Button
           variant="contained"
@@ -98,24 +117,20 @@ export const List = () => {
             color: "black",
             "&:hover": { backgroundColor: yellow[500] },
           }}
-          onClick={addTask}
+          onClick={() => setOpenAddTaskDialog(true)}
         >
-          {taskAdded ? (
-            <CircularProgress
-              variant={taskAdded ? "indeterminate" : "determinate"}
-              sx={taskAdded ? { display: "block" } : { display: "none" }}
-            />
-          ) : (
-            <Typography>Add Task</Typography>
-          )}
+          <Typography>Add New Task</Typography>
         </Button>
       </Box>
       <TableContainer component={Paper}>
         <Table>
           <TableBody>
-            {allTasks ? (
-              allTasks?.map((singleTask, index) => (
-                <Task key={index} props={{ singleTask, index, setAllTasks }} />
+            {searchedTask ? (
+              searchedTask?.map((singleTask, index) => (
+                <Task
+                  key={index}
+                  props={{ singleTask, index, setAllTasks, setSearchedTask }}
+                />
               ))
             ) : (
               <TableRow>
@@ -127,6 +142,32 @@ export const List = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Dialog
+        open={openAddTaskDialog}
+        onClose={handleCloseAddTaskDialog}
+        fullWidth
+      >
+        <LinearProgress
+          variant={taskAdded ? "indeterminate" : "determinate"}
+          value={100}
+        />
+        <DialogTitle textAlign="center">Add New Task</DialogTitle>
+        <DialogContent>
+          <TextField
+            fullWidth
+            label="Write a task..."
+            autoComplete="off"
+            onBlur={(e) => setTask({ ...task, title: e.target.value })}
+            sx={{ marginTop: "10px" }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseAddTaskDialog}>Cancel</Button>
+          <Button onClick={addTask}>Ok</Button>
+        </DialogActions>
+      </Dialog>
+
       <Snackbar
         open={showAlert}
         autoHideDuration={5000}
@@ -137,65 +178,6 @@ export const List = () => {
           {alertMessage}
         </Alert>
       </Snackbar>
-
-      {/* <form className="add" onSubmit={(e) => e.preventDefault()}>
-        <input type="text" placeholder=" Enter your task..." ref={refAdd} />
-        <button onClick={addTask} onKeyDown={addTask}>
-          Add
-        </button>
-      </form>
-      <div className="list">
-        {todos ? (
-          todos.map((todo, index) => {
-            return (
-              <div key={index} className="todo">
-                {updatedTodo && updatedTodo === todo._id ? (
-                  <div className="editing">
-                    <span>
-                      {index + 1}.
-                      <input defaultValue={todo.title} ref={refUpdate} />
-                    </span>
-                    <div className="buttons">
-                      <button onClick={() => setUpdatedTodo("")}>
-                        <FontAwesomeIcon
-                          icon={faXmarkCircle}
-                          fontSize="1.2rem"
-                          color="red"
-                        />
-                      </button>
-                      <button onClick={() => updateTask(todo._id)}>
-                        <FontAwesomeIcon
-                          icon={faCheckCircle}
-                          fontSize="1.2rem"
-                          color="green"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <span>{`${index + 1}. ${todo.title}`}</span>
-                )}
-                <div className="edit-delete">
-                  <FontAwesomeIcon
-                    icon={faPenToSquare}
-                    color="blue"
-                    cursor="pointer"
-                    onClick={() => setUpdatedTodo(todo._id)}
-                  />
-                  <FontAwesomeIcon
-                    icon={faTrashCan}
-                    color="red"
-                    cursor="pointer"
-                    onClick={() => deleteTask(todo._id)}
-                  />
-                </div>
-              </div>
-            );
-          })
-        ) : (
-          <h1>Loading...</h1>
-        )}
-      </div> */}
     </main>
   );
 };
