@@ -12,7 +12,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import Delete from "@mui/icons-material/Delete";
-import { deleteTodo, updateTodo } from "../../api/todoAPI";
+import { addToHistory, deleteTodo, updateTodo } from "../../api/todoAPI";
 import { useState } from "react";
 import Edit from "@mui/icons-material/Edit";
 import Cancel from "@mui/icons-material/Cancel";
@@ -42,6 +42,11 @@ export const Task = ({ props }) => {
       setAllTasks(res);
       setSearchedTask(res);
       setTaskEditing(false);
+      await addToHistory({
+        title: singleTask.title,
+        typeOfModification: "Edited",
+        time: new Date().toLocaleString(),
+      });
     }
   };
 
@@ -53,6 +58,11 @@ export const Task = ({ props }) => {
       setAnchorEl(null); //  close menu of three dot (phone screen size)
       setAllTasks(res);
       setSearchedTask(res); //  all task will be refresh
+      await addToHistory({
+        title: singleTask.title,
+        typeOfModification: "Deleted",
+        time: new Date().toLocaleString(),
+      });
     }
   };
 

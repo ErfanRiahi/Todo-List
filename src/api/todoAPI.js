@@ -3,6 +3,7 @@ import axios from "axios";
 const baseUrl = "https://todo-list-493w.onrender.com";
 // const baseUrl = "http://localhost:5000";
 
+// ******************** Todo ********************
 export async function getAllTodos() {
   try {
     const todos = await axios.get(baseUrl);
@@ -37,6 +38,25 @@ export async function deleteTodo(id) {
         id,
       },
     });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// ******************** History ********************
+export async function getAllHistories() {
+  try {
+    const res = await axios.get(baseUrl + "/history");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function addToHistory(history) {
+  try {
+    const res = await axios.post(baseUrl + "/history", history);
     return res.data;
   } catch (err) {
     console.log(err);

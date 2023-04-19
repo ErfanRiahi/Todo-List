@@ -1,6 +1,11 @@
 import "./style.css";
 import { useEffect, useState } from "react";
-import { addTodo, getAllTodos, updateTodo } from "../../api/todoAPI";
+import {
+  addTodo,
+  addToHistory,
+  getAllTodos,
+  updateTodo,
+} from "../../api/todoAPI";
 import Button from "@mui/material/Button";
 import {
   Alert,
@@ -77,6 +82,11 @@ export const List = () => {
       setAllTasks(res);
       setSearchedTask(res);
       handleCloseAddTaskDialog();
+      await addToHistory({
+        title: task.title,
+        typeOfModification: "Added",
+        time: new Date().toLocaleString(),
+      });
     }
   };
 
