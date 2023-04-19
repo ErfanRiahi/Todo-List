@@ -5,6 +5,11 @@ const {
   updateTodo,
   deleteTodo,
 } = require("../../controller/todosController");
+const {
+  getAllHistories,
+  addToHistory,
+} = require("../../controller/historyController");
+
 const router = express.Router();
 
 router
@@ -13,5 +18,7 @@ router
   .post(createTodo)
   .put(updateTodo)
   .delete(deleteTodo);
+
+router.route("/history").get(getAllHistories).post(addToHistory);
 
 module.exports = router;

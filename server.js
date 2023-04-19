@@ -12,17 +12,6 @@ app.use("/", require("./routes/api/todos"));
 
 const PORT = process.env.PORT || 5000;
 
-// const start = async () => {
-//   try {
-//     await connectDB(process.env.MONGO_URI);
-//     app.listen(PORT, () => console.log(`server is running on port ${PORT} 😃`));
-//   } catch (err) {
-//     console.log("*******ERROR IN server*******", err);
-//   }
-// };
-
-// start();
-
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() =>
