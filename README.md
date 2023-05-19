@@ -1,3 +1,3 @@
 # Todo-List
 
-Click here to see the [website](https://aps-todo-list.netlify.app/)
+Click [here](https://aps-todo-list.netlify.app/) to see the website
