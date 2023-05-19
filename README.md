@@ -1,3 +1,3 @@
 # Todo-List
 
-This is my [Todo website](https://aps-todo-list.netlify.app/){:target="_blank"}
+This is my <a href="https://aps-todo-list.netlify.app/" target="_blank">Website</a>
